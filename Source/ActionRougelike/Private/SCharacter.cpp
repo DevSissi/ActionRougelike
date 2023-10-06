@@ -3,12 +3,27 @@
 
 #include "SCharacter.h"
 
+#include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+
 // Sets default values
 ASCharacter::ASCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>("SpringArmComp");
+	SpringArmComp->bUsePawnControlRotation = false;
+	SpringArmComp->SetupAttachment(RootComponent);
+	
+	CameraComp = CreateDefaultSubobject<UCameraComponent>("CamaraComp");
+	CameraComp->SetupAttachment(SpringArmComp);
+
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	
+	bUseControllerRotationYaw = false;
+	
 }
 
 // Called when the game starts or when spawned
@@ -16,6 +31,16 @@ void ASCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ASCharacter::MoveForward(float Value)
+{
+	AddMovementInput(GetActorForwardVector(),Value);
+}
+
+void ASCharacter::MoveRight(float Value)
+{
+	AddMovementInput(GetActorRightVector(),Value);
 }
 
 // Called every frame
@@ -30,5 +55,11 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAxis("MoveForward", this, &ASCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ASCharacter::MoveRight);
+	
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUp",this, &APawn::AddControllerPitchInput);
+	
 }
 

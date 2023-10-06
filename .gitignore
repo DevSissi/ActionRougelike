@@ -75,3 +75,6 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+#排除导入资产
+Content/ParagonShinbi/
