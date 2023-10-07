@@ -14,7 +14,7 @@ ASCharacter::ASCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>("SpringArmComp");
-	SpringArmComp->bUsePawnControlRotation = false;
+	SpringArmComp->bUsePawnControlRotation = true;
 	SpringArmComp->SetupAttachment(RootComponent);
 	
 	CameraComp = CreateDefaultSubobject<UCameraComponent>("CamaraComp");
@@ -31,16 +31,6 @@ void ASCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-}
-
-void ASCharacter::MoveForward(float Value)
-{
-	AddMovementInput(GetActorForwardVector(),Value);
-}
-
-void ASCharacter::MoveRight(float Value)
-{
-	AddMovementInput(GetActorRightVector(),Value);
 }
 
 // Called every frame
@@ -60,6 +50,51 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp",this, &APawn::AddControllerPitchInput);
+
+	PlayerInputComponent->BindAction("PrimaryAttack",IE_Pressed,this,&ASCharacter::PrimaryAttack);
+	
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	
 }
 
+//
+void ASCharacter::MoveForward(float Value)
+{
+	FRotator RotatorRotation = GetControlRotation();
+	RotatorRotation.Pitch = 0.0f;
+	RotatorRotation.Roll = 0.0f;
+	
+	AddMovementInput(RotatorRotation.Vector(),Value);
+}
+
+void ASCharacter::MoveRight(float Value)
+{
+	FRotator RotatorRotation = GetControlRotation();
+	RotatorRotation.Pitch = 0.0f;
+	RotatorRotation.Roll = 0.0f;
+	
+	 // x = 前方		红色
+	 // y = 右方		绿色
+	 // z = 上方		蓝色
+	
+	FVector RightVector = FRotationMatrix(RotatorRotation).GetScaledAxis(EAxis::Y);
+	
+	AddMovementInput(RightVector, Value);
+}
+
+void ASCharacter::PrimaryAttack()
+{
+	FVector SwordLoc = GetMesh()->GetSocketLocation("Sword_Base");
+	
+	FTransform SpawnTrans = FTransform(GetActorRotation(),SwordLoc);
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	
+	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTrans,SpawnParams);
+}
+
+void Jump()
+{
+	
+}
