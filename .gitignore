@@ -77,4 +77,5 @@ Plugins/*/Intermediate/*
 DerivedDataCache/*
 
 #排除导入资产
-Content/ParagonShinbi/
+Content/*
+!Content/Game/*

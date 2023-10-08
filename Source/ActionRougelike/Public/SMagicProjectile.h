@@ -21,12 +21,15 @@ public:
 
 protected:
 
+	// 球体组件
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* SphereComp;
 
+	// 弹丸运动组件
 	UPROPERTY(VisibleAnywhere)
 	UProjectileMovementComponent* MovementComp;
 
+	// 粒子系统组件
 	UPROPERTY(VisibleAnywhere)
 	UParticleSystemComponent* EffectComp;
 	
