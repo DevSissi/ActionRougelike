@@ -99,11 +99,11 @@ void ASCharacter::MoveRight(float Value)
 
 void ASCharacter::PrimaryAttack()
 {
-	// 获取角色的武器位置
-	FVector SwordLoc = GetMesh()->GetSocketLocation("Sword");
+	// 获取角色的发射粒子对应的骨骼位置
+	FVector ProjectileLoc = GetMesh()->GetSocketLocation("Muzzle_01");
 	
 	// 将弹体生成位置设置为武器位置
-	FTransform SpawnTrans = FTransform(GetActorRotation(),SwordLoc);
+	FTransform SpawnTrans = FTransform(GetActorRotation(),ProjectileLoc);
 	//设定生成参数，即使碰撞也始终生成
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;

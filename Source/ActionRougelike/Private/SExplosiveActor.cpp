@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ExplosiveActor.h"
+#include "SExplosiveActor.h"
 
 #include "PhysicsEngine/RadialForceComponent.h"
 
 // Sets default values
-AExplosiveActor::AExplosiveActor()
+ASExplosiveActor::ASExplosiveActor()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -28,33 +28,33 @@ AExplosiveActor::AExplosiveActor()
 	RadialForceComp->SetupAttachment(StaticMeshComp);
 
 	// 初始化设置径向力组件
-	RadialForceComp->Radius = 400.0f;
-	RadialForceComp->ImpulseStrength = 200.0f;
+	RadialForceComp->Radius = 500.0f;
+	RadialForceComp->ImpulseStrength = 400.0f;
 	RadialForceComp->bImpulseVelChange = true;
 }
 
-void AExplosiveActor::PostInitializeComponents()
+void ASExplosiveActor::PostInitializeComponents()
 {
 	// 调用父类 AExplosiveActor 的 PostInitializeComponents 函数
 	Super::PostInitializeComponents();
 	// 将 StaticMeshComp 的 OnComponentHit 事件添加一个动态监听器，当有碰撞发生时调用 OnActorHit 函数
-	StaticMeshComp->OnComponentHit.AddDynamic(this,&AExplosiveActor::OnActorHit);
+	StaticMeshComp->OnComponentHit.AddDynamic(this,&ASExplosiveActor::OnActorHit);
 }
 
-void AExplosiveActor::OnActorHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void ASExplosiveActor::OnActorHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	// 发生碰撞时发出脉冲
 	RadialForceComp->FireImpulse();
 }
 
 // Called when the game starts or when spawned
-void AExplosiveActor::BeginPlay()
+void ASExplosiveActor::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
 // Called every frame
-void AExplosiveActor::Tick(float DeltaTime)
+void ASExplosiveActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }

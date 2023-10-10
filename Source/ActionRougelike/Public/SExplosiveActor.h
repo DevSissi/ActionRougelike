@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ExplosiveActor.generated.h"
+#include "SExplosiveActor.generated.h"
 
 class URadialForceComponent;
 
 UCLASS()
-class ACTIONROUGELIKE_API AExplosiveActor : public AActor
+class ACTIONROUGELIKE_API ASExplosiveActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AExplosiveActor();
+	ASExplosiveActor();
 
 protected:
 	

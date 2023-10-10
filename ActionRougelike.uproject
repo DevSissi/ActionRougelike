@@ -22,6 +22,11 @@
 			]
 		},
 		{
+			"Name": "AssetsCleaner",
+			"Enabled": false,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/3caab7c6e81f449296989122c043ae21"
+		},
+		{
 			"Name": "AutoSizeComments",
 			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/ae89a2c4ab384de0a3f213b23de324f3"
@@ -32,24 +37,19 @@
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/b719437f3fb54c259b34227363df8cab"
 		},
 		{
-			"Name": "SwitchLanguage",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/f6a1236f673345299f7fb888da78a2ba"
-		},
-		{
 			"Name": "RestartEditor",
 			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/a00eb1e478ae4a8fb655aa22f9125b07"
 		},
 		{
+			"Name": "SwitchLanguage",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/f6a1236f673345299f7fb888da78a2ba"
+		},
+		{
 			"Name": "ProjectCleaner",
 			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/4d7f5dc837fc4b009bb91e678adf9fd0"
-		},
-		{
-			"Name": "AssetsCleaner",
-			"Enabled": false,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/3caab7c6e81f449296989122c043ae21"
 		}
 	]
 }
