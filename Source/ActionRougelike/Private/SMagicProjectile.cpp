@@ -38,14 +38,14 @@ ASMagicProjectile::ASMagicProjectile()
 
 }
 
-// Called when the game starts or when spawned
+// 游戏开始或生成时调用
 void ASMagicProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
-// Called every frame
+// 在每一帧调用
 void ASMagicProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// 在项目设置的描述页面中填写您的版权声明。
 
 #pragma once
 
@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "SCharacter.generated.h"
 
+class USInteractComponent;
 class UCameraComponent;
 class USpringArmComponent;
 
@@ -15,7 +16,7 @@ class ACTIONROUGELIKE_API ASCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
+	// 设置该角色属性的默认值
 	ASCharacter();
 
 protected:
@@ -27,8 +28,12 @@ protected:
 	// 摄像机组件
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComp;
+
+	//互动组件
+	UPROPERTY(VisibleAnywhere)
+	USInteractComponent* InteractComp;
 	
-	// Called when the game starts or when spawned
+	// 游戏开始或生成时调用
 	virtual void BeginPlay() override;
 
 	// 角色前后移动
@@ -37,16 +42,18 @@ protected:
 	void MoveRight(float Value);
 	// 角色主要攻击
 	void PrimaryAttack();
+	//角色互动
+	void DefaultInteract();
 
 	// 生成的弹体类
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AActor> ProjectileClass;
 
 public:	
-	// Called every frame
+	// 在每一帧调用
 	virtual void Tick(float DeltaTime) override;
 	
-	// Called to bind functionality to input
+	// 调用将功能绑定到输入
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };

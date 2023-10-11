@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// 在项目设置的描述页面填写您的版权声明。
 
 #pragma once
 
@@ -12,28 +12,32 @@ class ACTIONROUGELIKE_API ASItemChest : public AActor,public ISGameplayInterface
 {
 	GENERATED_BODY()
 
+	// 重写 ISGameplayInterface::Interact 方法
 	void Interact_Implementation(APawn* InstigatorPawn) override;
 	
 public:	
-	// Sets default values for this actor's properties
+	// 设置该 actor 属性的默认值
 	ASItemChest();
 
+	// 设置物品打开时的网格体角度
 	UPROPERTY(EditAnywhere)
-	FRotator OpenRotition;
+	FRotator OpenedRotation;
 
 protected:
 
+	// 物品的基座
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BaseMeshComp;
 
+	// 物品的盖子
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* LidMeshComp;
 	
-	// Called when the game starts or when spawned
+	// 游戏开始或生成时调用
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
+	// 在每一帧调用
 	virtual void Tick(float DeltaTime) override;
 
 };

@@ -3,6 +3,7 @@
 
 #include "SCharacter.h"
 
+#include "SInteractComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -28,6 +29,10 @@ ASCharacter::ASCharacter()
 	// 将角色朝向向加速度方向旋转，用RotationRate作为旋转改变速率
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	bUseControllerRotationYaw = false;
+
+	//创建交互组件
+	InteractComp = CreateDefaultSubobject<USInteractComponent>("InteractComp");
+	
 	
 }
 
@@ -64,6 +69,10 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	// 将角色的跳跃绑定到动作输入
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+	//将角色的互动绑定到动作输入
+	//将角色的交互绑定到动作输入
+	PlayerInputComponent->BindAction("DefaultInteract", IE_Pressed, this, &ASCharacter::DefaultInteract);
 	
 }
 
@@ -99,6 +108,8 @@ void ASCharacter::MoveRight(float Value)
 
 void ASCharacter::PrimaryAttack()
 {
+	
+	
 	// 获取角色的发射粒子对应的骨骼位置
 	FVector ProjectileLoc = GetMesh()->GetSocketLocation("Muzzle_01");
 	
@@ -110,4 +121,10 @@ void ASCharacter::PrimaryAttack()
 
 	//在武器位置生成弹体
 	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTrans,SpawnParams);
+}
+
+void ASCharacter::DefaultInteract()
+{
+	// 调用默认交互函数
+	InteractComp->DefaultInteract();
 }
