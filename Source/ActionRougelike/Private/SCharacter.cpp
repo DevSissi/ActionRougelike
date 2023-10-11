@@ -108,8 +108,16 @@ void ASCharacter::MoveRight(float Value)
 
 void ASCharacter::PrimaryAttack()
 {
+	//播放主要攻击动画
+	PlayAnimMontage(PrimaryAttackAnim);
 	
-	
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack,this,&ASCharacter::PrimaryAttack_Timeover,0.12f);
+
+	//GetWorldTimerManager().ClearTimer(TimerHandle_PrimaryAttack);
+}
+
+void ASCharacter::PrimaryAttack_Timeover()
+{
 	// 获取角色的发射粒子对应的骨骼位置
 	FVector ProjectileLoc = GetMesh()->GetSocketLocation("Muzzle_01");
 	

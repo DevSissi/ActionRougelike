@@ -18,7 +18,7 @@ class ACTIONROUGELIKE_API ASCharacter : public ACharacter
 public:
 	// 设置该角色属性的默认值
 	ASCharacter();
-
+	
 protected:
 
 	// 弹簧臂组件
@@ -29,9 +29,19 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComp;
 
-	//互动组件
+	// 互动组件
 	UPROPERTY(VisibleAnywhere)
 	USInteractComponent* InteractComp;
+
+	// 生成的弹体类
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	TSubclassOf<AActor> ProjectileClass;
+
+	// 主要攻击动画
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	UAnimMontage* PrimaryAttackAnim;
+
+	FTimerHandle TimerHandle_PrimaryAttack;
 	
 	// 游戏开始或生成时调用
 	virtual void BeginPlay() override;
@@ -45,9 +55,7 @@ protected:
 	//角色互动
 	void DefaultInteract();
 
-	// 生成的弹体类
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<AActor> ProjectileClass;
+	void PrimaryAttack_Timeover();
 
 public:	
 	// 在每一帧调用
