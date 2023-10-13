@@ -31,7 +31,7 @@ protected:
 	virtual void PostInitializeComponents() override;
 	
 	// 被击反应函数，当该 Actor 被另一个组件击中时调用
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void OnActorHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	
 	// Called when the game starts or when spawned

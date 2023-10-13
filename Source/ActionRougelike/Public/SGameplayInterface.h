@@ -26,6 +26,6 @@ class ACTIONROUGELIKE_API ISGameplayInterface
 public:
 	// 接口函数：互动 --传入Pawn而非Character扩大可与之交互的对象范围
 	// 使用BlueprintNativeEvent时无法使用虚函数
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void Interact(APawn*  InstigatorPawn);
 };

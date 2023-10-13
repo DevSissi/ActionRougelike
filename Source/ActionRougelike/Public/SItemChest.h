@@ -30,7 +30,7 @@ protected:
 	UStaticMeshComponent* BaseMeshComp;
 
 	// 物品的盖子
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UStaticMeshComponent* LidMeshComp;
 	
 	// 游戏开始或生成时调用
