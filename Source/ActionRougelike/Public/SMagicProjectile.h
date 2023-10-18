@@ -22,7 +22,7 @@ public:
 protected:
 
 	// 球体组件
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USphereComponent* SphereComp;
 
 	// 弹丸运动组件

@@ -111,7 +111,7 @@ void ASCharacter::PrimaryAttack()
 	//播放主要攻击动画
 	PlayAnimMontage(PrimaryAttackAnim);
 	
-	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack,this,&ASCharacter::PrimaryAttack_Timeover,0.12f);
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack,this,&ASCharacter::PrimaryAttack_Timeover,0.25f);
 
 	//GetWorldTimerManager().ClearTimer(TimerHandle_PrimaryAttack);
 }
@@ -123,9 +123,12 @@ void ASCharacter::PrimaryAttack_Timeover()
 	
 	// 将弹体生成位置设置为武器位置
 	FTransform SpawnTrans = FTransform(GetActorRotation(),ProjectileLoc);
+	
 	//设定生成参数，即使碰撞也始终生成
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	//将粒子的触发者（触发器）设置为玩家角色（发射者）
+	SpawnParams.Instigator = this;
 
 	//在武器位置生成弹体
 	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTrans,SpawnParams);

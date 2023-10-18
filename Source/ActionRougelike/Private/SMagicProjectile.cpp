@@ -35,6 +35,7 @@ ASMagicProjectile::ASMagicProjectile()
 	MovementComp->bInitialVelocityInLocalSpace = true;
 	// 关闭重力影响（值设置为0）
 	MovementComp->ProjectileGravityScale = 0.0f;
+	
 
 }
 
