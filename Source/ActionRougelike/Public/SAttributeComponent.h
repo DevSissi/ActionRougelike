@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "SAttributeComponent.generated.h"
 
+// 为组件创建一个 当生命值改变时 的触发事件
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FiveParams(FOnChangeHealth, AActor*, InstigatorActor, USAttributeComponent*, AffectComp, float, CurrentHealth, float, MaxHealth, float, Delta);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ACTIONROUGELIKE_API USAttributeComponent : public UActorComponent
@@ -28,6 +30,10 @@ protected:
 public:
 	// 改变血量
 	UFUNCTION(BlueprintCallable,Category = "Attributes")
-	bool ChangeHealth(float Delta);
+	bool isChangeHealth(float Delta);
+
+	// BlueprintAssignable 仅可与多播代表一起使用。公开用于在蓝图中分配的属性。
+	UPROPERTY(BlueprintAssignable)
+	FOnChangeHealth OnChangeHealth;
 		
 };

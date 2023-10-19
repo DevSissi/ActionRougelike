@@ -10,9 +10,11 @@ USAttributeComponent::USAttributeComponent()
 }
 
 
-bool USAttributeComponent::ChangeHealth(float Delta)
+bool USAttributeComponent::isChangeHealth(float Delta)
 {
 	CurrentHealth += Delta;
+
+	OnChangeHealth.Broadcast(nullptr, this, CurrentHealth, MaxHealth, Delta);
 	
 	return true;
 }

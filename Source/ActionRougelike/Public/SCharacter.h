@@ -35,7 +35,7 @@ protected:
 	USInteractComponent* InteractComp;
 
 	//属性组件
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USAttributeComponent* AttributeComp;
 
 	// 生成的弹体类

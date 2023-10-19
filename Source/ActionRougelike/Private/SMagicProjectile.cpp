@@ -52,7 +52,7 @@ void ASMagicProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 		USAttributeComponent* AtrributeComp = Cast<USAttributeComponent>(OtherActor->GetComponentByClass(USAttributeComponent::StaticClass()));
 
 		// 改变其他物体的血量
-		AtrributeComp->ChangeHealth(Damage);
+		AtrributeComp->isChangeHealth(Damage);
 
 		Destroy();
 	}
