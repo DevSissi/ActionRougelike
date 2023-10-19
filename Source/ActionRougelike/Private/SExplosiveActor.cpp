@@ -46,7 +46,7 @@ void ASExplosiveActor::PostInitializeComponents()
 }
 
 /** 
- * @brief 函数简要说明-测试函数
+ * @brief 当 Actor 被击中时
  * @param HitComp		表示被碰撞的组件，可能是角色本身的一个组件，也可能是其他物体碰撞到该组件上。
  * @param OtherActor	表示碰撞的Actor。
  * @param OtherComp		表示碰撞的组件。
@@ -61,7 +61,7 @@ void ASExplosiveActor::OnActorHit(UPrimitiveComponent* HitComp, AActor* OtherAct
 	// Debug入门
 	// 通过UE的Debug系统记录日志
 	// 这段代码的目的是在Unreal Engine 5中使用UE_LOG函数记录一条日志。LogTemp是一个日志类别，Log是一个日志级别。TEXT是一个格式化字符串的宏，用于将其他参数插入到字符串中。
-	UE_LOG(LogTemp,Log,TEXT("其他Actor: %s, 游戏内时间: %f"),*OtherActor->GetName(),GetWorld()->TimeSeconds);
+	//UE_LOG(LogTemp,Log,TEXT("其他Actor: %s, 游戏内时间: %f"),*OtherActor->GetName(),GetWorld()->TimeSeconds);
 }
 
 // Called when the game starts or when spawned

@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "SCharacter.generated.h"
 
+class USAttributeComponent;
 class USInteractComponent;
 class UCameraComponent;
 class USpringArmComponent;
@@ -33,6 +34,10 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	USInteractComponent* InteractComp;
 
+	//属性组件
+	UPROPERTY(VisibleAnywhere)
+	USAttributeComponent* AttributeComp;
+
 	// 生成的弹体类
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	TSubclassOf<AActor> ProjectileClass;
@@ -52,9 +57,9 @@ protected:
 	void MoveRight(float Value);
 	// 角色主要攻击
 	void PrimaryAttack();
-	//角色互动
+	// 角色互动
 	void DefaultInteract();
-
+	// 角色主要攻击2
 	void PrimaryAttack_Timeover();
 
 public:	

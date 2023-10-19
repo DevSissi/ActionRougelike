@@ -15,7 +15,10 @@ class ACTIONROUGELIKE_API ASMagicProjectile : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 	// Sets default values for this actor's properties
 	ASMagicProjectile();
 
@@ -32,12 +35,9 @@ protected:
 	// 粒子系统组件
 	UPROPERTY(VisibleAnywhere)
 	UParticleSystemComponent* EffectComp;
-	
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
+	// 伤害数值
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	float Damage;	
 };

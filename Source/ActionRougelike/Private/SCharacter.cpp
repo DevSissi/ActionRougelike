@@ -3,10 +3,12 @@
 
 #include "SCharacter.h"
 
+#include "SAttributeComponent.h"
 #include "SInteractComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/BlueprintTypeConversions.h"
 
 // Sets default values
 ASCharacter::ASCharacter()
@@ -32,6 +34,9 @@ ASCharacter::ASCharacter()
 
 	//创建交互组件
 	InteractComp = CreateDefaultSubobject<USInteractComponent>("InteractComp");
+
+	//创建属性组件
+	AttributeComp = CreateDefaultSubobject<USAttributeComponent>("AttributeComp");
 	
 	
 }
@@ -118,20 +123,23 @@ void ASCharacter::PrimaryAttack()
 
 void ASCharacter::PrimaryAttack_Timeover()
 {
-	// 获取角色的发射粒子对应的骨骼位置
-	FVector ProjectileLoc = GetMesh()->GetSocketLocation("Muzzle_01");
+	if (ensure(ProjectileClass))
+	{
+		// 获取角色的发射粒子对应的骨骼位置
+		FVector ProjectileLoc = GetMesh()->GetSocketLocation("Muzzle_01");
+		
+		// 将弹体生成位置设置为武器位置,方向为摄像机朝向
+		FTransform SpawnTrans = FTransform(GetControlRotation(), ProjectileLoc);
 	
-	// 将弹体生成位置设置为武器位置
-	FTransform SpawnTrans = FTransform(GetActorRotation(),ProjectileLoc);
-	
-	//设定生成参数，即使碰撞也始终生成
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	//将粒子的触发者（触发器）设置为玩家角色（发射者）
-	SpawnParams.Instigator = this;
+		//设定生成参数，即使碰撞也始终生成
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		//将粒子的触发者（触发器）设置为玩家角色（发射者）
+		SpawnParams.Instigator = this;
 
-	//在武器位置生成弹体
-	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTrans,SpawnParams);
+		//在武器位置生成弹体
+		GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTrans,SpawnParams);
+	}
 }
 
 void ASCharacter::DefaultInteract()

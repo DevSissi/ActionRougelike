@@ -3,6 +3,7 @@
 
 #include "SMagicProjectile.h"
 
+#include "SAttributeComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
@@ -19,6 +20,8 @@ ASMagicProjectile::ASMagicProjectile()
 	SphereComp->SetCollisionProfileName("Projectile");
 	// 将球体组件设置为根组件
 	RootComponent = SphereComp;
+	// 将 SphereComp 的 OnComponentBeginOverlap 事件添加一个动态监听器，当发生时调用 OnOverlapBegin 函数
+	SphereComp->OnComponentBeginOverlap.AddDynamic(this, &ASMagicProjectile::OnOverlapBegin);
 
 	// 创建粒子系统组件
 	EffectComp = CreateDefaultSubobject<UParticleSystemComponent>("EffectComp");
@@ -39,17 +42,18 @@ ASMagicProjectile::ASMagicProjectile()
 
 }
 
-// 游戏开始或生成时调用
-void ASMagicProjectile::BeginPlay()
+void ASMagicProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Super::BeginPlay();
-	
+	// 如果其他 Actor 不为空
+	if (ensure(OtherActor))
+	{
+		// 尝试将其他 Actor 转换为 USAttributeComponent
+		USAttributeComponent* AtrributeComp = Cast<USAttributeComponent>(OtherActor->GetComponentByClass(USAttributeComponent::StaticClass()));
+
+		// 改变其他物体的血量
+		AtrributeComp->ChangeHealth(Damage);
+
+		Destroy();
+	}
 }
-
-// 在每一帧调用
-void ASMagicProjectile::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
