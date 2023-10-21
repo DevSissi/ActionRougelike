@@ -6,6 +6,7 @@
 // 设置该角色属性的默认值
 USAttributeComponent::USAttributeComponent()
 {
+	MaxHealth = 100.0f;
 	CurrentHealth = MaxHealth;
 }
 

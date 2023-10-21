@@ -27,6 +27,11 @@ protected:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	URadialForceComponent* RadialForceComp;
 
+	//爆炸伤害
+	UPROPERTY(EditAnywhere,BlueprintReadOnly)
+	float Damage;
+	
+
 	// 实例初始化函数，在游戏初始化和Pawn生成后调用
 	virtual void PostInitializeComponents() override;
 	

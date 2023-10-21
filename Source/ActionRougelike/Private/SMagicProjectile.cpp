@@ -46,7 +46,7 @@ void ASMagicProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	// 如果其他 Actor 不为空
-	if (ensure(OtherActor))
+	if (ensure(OtherActor && OtherActor != GetInstigator()))
 	{
 		// 尝试将其他 Actor 转换为 USAttributeComponent
 		USAttributeComponent* AtrributeComp = Cast<USAttributeComponent>(OtherActor->GetComponentByClass(USAttributeComponent::StaticClass()));

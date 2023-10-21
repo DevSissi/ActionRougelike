@@ -3,6 +3,7 @@
 
 #include "SExplosiveActor.h"
 
+#include "SAttributeComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
 
 // Sets default values
@@ -37,6 +38,9 @@ ASExplosiveActor::ASExplosiveActor()
 	// 将 StaticMeshComp 的 OnComponentHit 事件添加一个动态监听器，当有碰撞发生时调用 OnActorHit 函数
 	// 在构造函数和下面的 PostInitializeComponents() 中调用都可以
 	StaticMeshComp->OnComponentHit.AddDynamic(this,&ASExplosiveActor::OnActorHit);
+
+	//初始化爆炸伤害
+	Damage = 50.f;
 }
 
 void ASExplosiveActor::PostInitializeComponents()
@@ -57,6 +61,13 @@ void ASExplosiveActor::OnActorHit(UPrimitiveComponent* HitComp, AActor* OtherAct
 {
 	// 发生碰撞时发出脉冲
 	RadialForceComp->FireImpulse();
+
+	if (OtherActor->GetComponentByClass(USAttributeComponent::StaticClass()))
+	{
+		USAttributeComponent* AffectComp = Cast<USAttributeComponent>(OtherActor->GetComponentByClass(USAttributeComponent::StaticClass()));
+		
+		AffectComp->isChangeHealth(-Damage);
+	}
 
 	// Debug入门
 	// 通过UE的Debug系统记录日志
