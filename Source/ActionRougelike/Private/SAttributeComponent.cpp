@@ -19,3 +19,17 @@ bool USAttributeComponent::isChangeHealth(float Delta)
 	
 	return true;
 }
+
+// bool USAttributeComponent::isChangeHealth(UMeshComponent* MeshComp, float Delta)
+// {
+// 	CurrentHealth += Delta;
+//
+// 	OnChangeHealth.Broadcast(nullptr, this, CurrentHealth, MaxHealth, Delta);
+//
+// 	if (Delta > 0.f)
+// 	{
+// 		MeshComp->SetScalarParameterValueOnMaterials("TimeToHit", GetWorld()->TimeSeconds());
+// 	}
+// 	
+// 	return true;
+// }

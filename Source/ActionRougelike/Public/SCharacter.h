@@ -2,14 +2,20 @@
 
 #pragma once
 
+
+#include "InputActionValue.h"
+
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "SCharacter.generated.h"
+
 
 class USAttributeComponent;
 class USInteractComponent;
 class UCameraComponent;
 class USpringArmComponent;
+class UInputMappingContext;
+class UInputAction;
 
 UCLASS()
 class ACTIONROUGELIKE_API ASCharacter : public ACharacter
@@ -46,22 +52,69 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	UAnimMontage* PrimaryAttackAnim;
 
+	
+
 	FTimerHandle TimerHandle_PrimaryAttack;
 	
 	// 游戏开始或生成时调用
 	virtual void BeginPlay() override;
 
-	// 角色前后移动
-	void MoveForward(float	Value);
-	// 角色左右移动
-	void MoveRight(float Value);
-	// 角色主要攻击
-	void PrimaryAttack();
-	// 角色互动
-	void DefaultInteract();
-	// 角色主要攻击2
-	void PrimaryAttack_Timeover();
+	
+	/* 旧输入系统
+	   // 角色前后移动
+	   void MoveForward(float	Value);
+	   // 角色左右移动
+	   void MoveRight(float Value);
+	   // 角色主要攻击
+	   void PrimaryAttack();
+	   // 角色互动
+	   void DefaultInteract();
+	   // 角色主要攻击2
+	   void PrimaryAttack_Timeover();
+	*/
+	
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "EnhancedInputSystem | Context")
+	TObjectPtr<UInputMappingContext> IMC_Action;
 
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "EnhancedInputSystem | Context")
+	TObjectPtr<UInputMappingContext> IMC_MoveBase;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "EnhancedInputSystem | Context")
+	TObjectPtr<UInputAction> IA_LookUp;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "EnhancedInputSystem | Context")
+	TObjectPtr<UInputAction> IA_Turn;
+	
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "EnhancedInputSystem | Context")
+	TObjectPtr<UInputAction> IA_MoveForward;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "EnhancedInputSystem | Context")
+	TObjectPtr<UInputAction> IA_MoveRight;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "EnhancedInputSystem | Context")
+	TObjectPtr<UInputAction> IA_Jump;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "EnhancedInputSystem | Context")
+	TObjectPtr<UInputAction> IA_PrimaryAttack;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite,Category = "EnhancedInputSystem | Context")
+	TObjectPtr<UInputAction> IA_DefaultInteract;
+
+	void LookUp(const FInputActionValue& InputActionValue);
+	void Turn(const FInputActionValue& InputActionValue);
+	void MoveForward(const FInputActionValue& InputActionValue);
+	void MoveRight(const FInputActionValue& InputActionValue);
+	void PlayerJump();
+	void PrimaryAttack();
+	void PrimaryAttack_Timeover();
+	void DefaultInteract();
+	
+	
+	// 角色生成弹体
+	UFUNCTION(BlueprintCallable)
+	void SpawnProjectile(TSubclassOf<AActor> SpawnProjectileClass);
+
+	
 public:	
 	// 在每一帧调用
 	virtual void Tick(float DeltaTime) override;

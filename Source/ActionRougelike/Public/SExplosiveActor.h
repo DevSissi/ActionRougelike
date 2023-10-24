@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "SExplosiveActor.generated.h"
 
+class USAttributeComponent;
 class URadialForceComponent;
 
 UCLASS()
@@ -26,6 +27,7 @@ protected:
 	// 径向力组件
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	URadialForceComponent* RadialForceComp;
+	
 
 	//爆炸伤害
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)

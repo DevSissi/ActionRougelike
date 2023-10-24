@@ -5,8 +5,12 @@
 
 #include <ocidl.h>
 
+#include "SCharacter.h"
 #include "SGameplayInterface.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/GameSession.h"
 #include "HAL/ExceptionHandling.h"
+#include "Physics/PhysicsFiltering.h"
 
 
 // 设置该组件属性的默认值
@@ -43,17 +47,21 @@ void USInteractComponent::DefaultInteract()
 	// 创建一个碰撞对象查询参数，用于检测可检测的对象
 	FCollisionObjectQueryParams QueryParams;
 	QueryParams.AddObjectTypesToQuery(ECC_WorldDynamic);
+	QueryParams.AddObjectTypesToQuery(ECC_PhysicsBody);
 	
 	// 获取玩家的眼睛视点
 	FVector EyeLoc;
 	FRotator EyeRot;
+	FVector StartLoc;
+	FVector EndLoc;
 
 	//GetOwner() 返回的是AActor*类型 后续根据需求转换
 	AActor* CompOwnerActor = GetOwner();
 	CompOwnerActor->GetActorEyesViewPoint(EyeLoc,EyeRot);
 
+	StartLoc = EyeLoc;
 	// 计算射线的终点
-	FVector EndLoc = EyeLoc + EyeRot.Vector() * 1000;
+	EndLoc = EyeLoc + EyeRot.Vector() * 100;
 
 	// 射线检测，LineTraceSingle 检测范围太窄
 	//FHitResult HitResult;
@@ -62,10 +70,18 @@ void USInteractComponent::DefaultInteract()
 	// 使用多重扫描检测
 	TArray<FHitResult> HitResult;
 	FCollisionShape HitShape;
-	float Radius = 30.0f;
-	HitShape.SetSphere(Radius);	
+	float Radius = 10.0f;
+	HitShape.SetSphere(Radius);
+
+	//使用角色的摄像机作为射线检测起点，防止移动相机后实际检测位置与视觉不符
+	if (UCameraComponent* CameraComp = GetOwner()->FindComponentByClass<UCameraComponent>())
+	{
+		StartLoc = CameraComp->GetComponentLocation();
+		EndLoc = StartLoc + CameraComp->GetForwardVector() * 100;
+	}
+	
 	// 将扫描结果存入bIsHit中
-	bool bIsHit = GetWorld()->SweepMultiByObjectType(HitResult,EyeLoc,EndLoc,FQuat::Identity,QueryParams,HitShape);
+	bool bIsHit = GetWorld()->SweepMultiByObjectType(HitResult,StartLoc,EndLoc,FQuat::Identity,QueryParams,HitShape);
 
 	// 遍历所有检测到的碰撞对象
 	for (FHitResult Hits : HitResult)
@@ -93,6 +109,6 @@ void USInteractComponent::DefaultInteract()
 
 	// 绘制调试 line
 	//FColor DebugLineColor = bIsHit ? FColor::Green : FColor::Red;
-	//DrawDebugLine(GetWorld(),EyeLoc,EndLoc,DebugLineColor,false,2.0f,0,1.0f);
+	//DrawDebugLine(GetWorld(),StartLoc,EndLoc,DebugLineColor,false,20.0f,0,1.0f);
 	
 }

@@ -16,6 +16,8 @@ ASMagicProjectile::ASMagicProjectile()
 
 	// 创建一个球体组件
 	SphereComp =  CreateDefaultSubobject<USphereComponent>("SphereComp");
+	// 设置球体半径
+	SphereComp->SetSphereRadius(1);
 	// 将碰撞组件的碰撞文件默认为Projectile
 	SphereComp->SetCollisionProfileName("Projectile");
 	// 将球体组件设置为根组件

@@ -69,6 +69,10 @@ void ASExplosiveActor::OnActorHit(UPrimitiveComponent* HitComp, AActor* OtherAct
 		AffectComp->isChangeHealth(-Damage);
 	}
 
+	
+	//设置材质内变量
+	StaticMeshComp->SetScalarParameterValueOnMaterials("TimeToHit",GetWorld()->TimeSeconds);
+
 	// Debug入门
 	// 通过UE的Debug系统记录日志
 	// 这段代码的目的是在Unreal Engine 5中使用UE_LOG函数记录一条日志。LogTemp是一个日志类别，Log是一个日志级别。TEXT是一个格式化字符串的宏，用于将其他参数插入到字符串中。
